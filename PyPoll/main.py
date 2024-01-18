@@ -54,3 +54,16 @@ for name in range(len(candidates)):
 print("-------------------------")
 print("Winner: " + winner)
 print("-------------------------")
+
+
+file = open("pollanalysis.txt", "w")
+file.write("Election Results"  + "\n")
+file.write("-------------------------" + "\n")
+file.write("Total Votes:  " + str(vote_start) + "\n")
+file.write("-------------------------" + "\n")
+for name in range(len(candidates)):
+    file.write((candidates[name]) + ": " + str(vote_percent[name]) + "% (" + str(candidate_total[name]) + ")" + "\n")
+file.write("-------------------------" + "\n")
+file.write("Winner: " + winner + "\n")
+file.write("-------------------------" + "\n")
+file.close
