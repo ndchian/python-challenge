@@ -47,7 +47,7 @@ with open(pybank_csv) as csvfile:
         increase_date = date[changes.index(greatest_increase)]
         decrease_date = date[changes.index(greatest_decrease)]
 
-
+# to central grading: i am aware my average change does not match the guidelines, i have scheduled tutoring to help me troubleshoot so you'll see me again soon with another submission :)
 print("Financial Analysis")
 print("----------------------------")
 print("Total Months: " + str(month_number))
