@@ -9,7 +9,8 @@ candidates=[]
 candidate_names=[]
 candidate_votes={}
 vote_start = 0
-vote_percent={}
+vote_percent=[]
+winner = ""
 
 with open(pypoll_csv) as csvfile: 
     csvreader = csv.reader(csvfile, delimiter = ',')
@@ -30,12 +31,14 @@ with open(pypoll_csv) as csvfile:
         # add vote to candidate total if they are not a unique value
         elif candidatename in candidates: 
             candidate_votes[candidatename] = candidate_votes[candidatename] + 1
+            vote_percent = round(((candidate_votes[candidatename]/total_votes)*100), 3)
 
-
+    
 
 print("Election Results")
 print("-------------------------")
 print("Total Votes:  " + str(vote_start))
 print("-------------------------")
 for name in range(len(candidates)):
-    print((candidates[name]) + ": " + str(vote_percent) + "% (" + str(candidate_votes[name]) + ")")
+    vote_percent = (candidate_votes[name]/total_votes) * 100 
+    print((candidates[name]) + ": " + str(vote_percent[name]) + "% (" + str(candidate_votes[name]) + ")")
