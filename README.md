@@ -41,4 +41,4 @@ Raymon Anthony Doane: 3.139% (11606)
 Winner: Diana DeGette
 -------------------------
 
-# note to central grading, i am aware my results do not match! i can tell i'm super close and will resubmit when i figure out what's blocking my path. so sorry!
+* note to central grading, i am aware my results do not match! i can tell i'm super close and will resubmit when i figure out what's blocking my path. so sorry!
