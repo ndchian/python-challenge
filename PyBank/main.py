@@ -20,14 +20,15 @@ with open(pybank_csv) as csvfile:
     for row in csvreader: 
         profit_current = int(row[1])
         # read each row in the file and start to add up total profits
-        date.append(row[0])
         profit.append(row[1])
         total_profit = total_profit + profit_current
-
+        
         # kourt from tutoring helped me figure out this if statement
         if profit_previous is not None:
-            # get the monthly profit change
+
+            # get the monthly profit change and store the month of change
             monthly_profit_change = profit_current - profit_previous
+            date.append(row[0])
 
             #store the monthly profit change into the list we defined above
             changes.append(monthly_profit_change)
@@ -44,8 +45,8 @@ greatest_decrease = min(changes)
 increase_date = date[changes.index(greatest_increase)]
 decrease_date = date[changes.index(greatest_decrease)]
 
-#get the average change to plug into the table that prints out
-month_number = len(date)
+#get the average change to plug into the table that prints out, + 1 since we didn't track the first month
+month_number = len(date) + 1
 
 # this was done in conjunction with kourt from tutoring
 average_change = round(
