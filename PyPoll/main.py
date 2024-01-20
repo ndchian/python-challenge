@@ -6,12 +6,10 @@ pypoll_csv = os.path.join("PyPoll", "Resources", "election_data.csv")
 # create lists/dictionary and set initial variables
 total_votes=[]
 candidates=[]
-candidate_names=[]
-candidate_total=[]
 candidate_votes=[]
-vote_start = 0
+candidate_percentage=[]
+total_votes = 0
 vote_percent=[]
-winner = ""
 winner_votes = 0
 
 with open(pypoll_csv) as csvfile: 
@@ -21,36 +19,35 @@ with open(pypoll_csv) as csvfile:
     for row in csvreader:
 
         # add to vote tally and establish candidate name
-        vote_start = vote_start + 1
+        total_votes += 1
         candidatename = (row[2])
         
         # generate list of unique candidate name values
         if candidatename not in candidates:
             candidates.append(candidatename)
-            candidate_votes = 0
-            candidate_votes = candidate_votes + 1
+            candidate_votes.append(1)
 
         # add vote to candidate total if they are not a unique value
-        elif candidatename in candidates: 
-            candidate_votes = candidate_votes + 1
-            candidate_total.append(candidate_votes)
+        else:
+            name = candidates.index(candidatename)
+            candidate_votes[name] += 1
 
-            #create a percentage of votes per candidate
-            candidate_percent = round((((int(candidate_votes))/vote_start)*100), 3)
-            vote_percent.append(candidate_percent)
-
-        
-    if candidate_votes > winner_votes:
-        winner_votes = candidate_votes
-        winner = candidatename
+# determine percentage of votes per candidate
+for x in range(len(candidate_votes)):
+    candidate_percentage.append(candidate_votes[x] / total_votes)
+    # converting help from stackoverflow https://stackoverflow.com/questions/61611110/how-do-i-convert-a-list-of-floats-into-a-list-of-percentages
+    converted = [f'{x*100:.3f}%' for x in candidate_percentage]
     
+    if candidate_votes[x] > winner_votes:
+        winner_votes = candidate_votes[x]
+        winner = candidates[x]
 
 print("Election Results")
 print("-------------------------")
-print("Total Votes:  " + str(vote_start))
+print("Total Votes:  " + str(total_votes))
 print("-------------------------")
 for name in range(len(candidates)):
-    print((candidates[name]) + ": " + str(vote_percent[name]) + "% (" + str(candidate_total[name]) + ")")
+    print((candidates[name]) + ": " + str.format(converted[name]) + " (" + str(candidate_votes[name]) + ")")
 print("-------------------------")
 print("Winner: " + winner)
 print("-------------------------")
@@ -59,10 +56,10 @@ print("-------------------------")
 file = open("pollanalysis.txt", "w")
 file.write("Election Results"  + "\n")
 file.write("-------------------------" + "\n")
-file.write("Total Votes:  " + str(vote_start) + "\n")
+file.write("Total Votes:  " + str(total_votes) + "\n")
 file.write("-------------------------" + "\n")
 for name in range(len(candidates)):
-    file.write((candidates[name]) + ": " + str(vote_percent[name]) + "% (" + str(candidate_total[name]) + ")" + "\n")
+    file.write((candidates[name]) + ": " + str.format(converted[name]) + " (" + str(candidate_votes[name]) + ")" + "\n")
 file.write("-------------------------" + "\n")
 file.write("Winner: " + winner + "\n")
 file.write("-------------------------" + "\n")
